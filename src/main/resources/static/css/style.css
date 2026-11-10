@@ -91,7 +91,8 @@ body {
   margin-right: 0.375rem;
 }
 
-.btn-primary {
+.btn-primary,
+.btn-serch {
   background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
   color: var(--color-white);
   box-shadow: var(--shadow);
@@ -287,7 +288,8 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-.form-group {
+.form-group,
+.serch-group {
   padding: 1.5rem;
   border-bottom: 1px solid var(--color-border);
 }
@@ -418,6 +420,14 @@ textarea {
   gap: 1rem;
   padding: 1.5rem;
   background-color: var(--color-background-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.serch-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 

@@ -18,6 +18,17 @@
             </a>
         </div>
 
+        <div class="notes-serch">
+            <form th:action="@{/memos}" method="get">        
+                <div class="serch-group">
+                    <input type="text" name="keyword">
+                    <div class="serch-button-container">
+                    <button type="submit" class="btn btn-serch">検索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="notes-grid">
             <div class="note-card" th:each="memo : ${memos}">
                 <div class="note-card-header">
