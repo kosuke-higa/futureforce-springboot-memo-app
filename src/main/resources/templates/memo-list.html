@@ -19,9 +19,9 @@
         </div>
 
         <div class="notes-serch">
-            <form th:action="@{/memos}" method="get">        
+            <form th:action="@{/memos/search}" method="post">        
                 <div class="serch-group">
-                    <input type="text" name="keyword">
+                    <input type="text" name="keyword" th:value="${keyword}">
                     <div class="serch-button-container">
                     <button type="submit" class="btn btn-serch">検索</button>
                     </div>
