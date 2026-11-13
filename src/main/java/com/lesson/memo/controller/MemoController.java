@@ -22,7 +22,6 @@ import com.lesson.memo.model.Priority;
 import com.lesson.memo.repository.MemoRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -33,12 +32,25 @@ public class MemoController {
     private MemoRepository memoRepository;
 
     @GetMapping
-    public String list(HttpSession session, Model model) {
-        @SuppressWarnings("unchecked")
-		List<Memo> memos = (List<Memo>) session.getAttribute("searchMemos");
-        String keyword = (String) session.getAttribute("keyword");
-        if (memos == null) {
-            memos = memoRepository.findAll();
+    public String list(Model model) {
+        List<Memo> memos = memoRepository.findAll();
+        
+        memos.sort(
+        	Comparator.comparingInt(
+        		memo -> memo.getPriority().ordinal()
+        	)
+        );
+        model.addAttribute("memos", memos);
+        return "memo-list";
+    }
+    
+    @GetMapping("/search")
+    public String search(@RequestParam(required = false) String keyword, Model model) {
+        List<Memo> memos;
+        if (keyword == null || keyword.isBlank()) {
+        	memos = memoRepository.findAll();
+        } else {
+            memos = memoRepository.findByTitleContainingOrContentContaining(keyword, keyword);
         }
         memos.sort(
             Comparator.comparingInt(
@@ -46,24 +58,7 @@ public class MemoController {
             )
         );
         model.addAttribute("memos", memos);
-        model.addAttribute("keyword", keyword);
-        session.removeAttribute("searchMemos");
-        session.removeAttribute("keyword");
         return "memo-list";
-    }
-    
-    @PostMapping("/search")
-    public String search(@RequestParam(value = "keyword", required = false) String keyword, HttpSession session) {
-        List<Memo> memos;
-        if (keyword == null || keyword.isBlank()) {
-        	memos = memoRepository.findAll();
-        } else {
-            memos = memoRepository.findByTitleContainingOrContentContaining(keyword, keyword);
-        }
-        session.setAttribute("searchMemos", memos);
-        session.setAttribute("keyword", keyword);
-
-        return "redirect:/memos";
     }
 
     @GetMapping("/new")
