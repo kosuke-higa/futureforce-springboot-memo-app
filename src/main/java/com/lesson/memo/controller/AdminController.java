@@ -35,7 +35,7 @@ public class AdminController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute @Valid Admin admin,
-            BindingResult result, Model model) {
+            BindingResult result) {
         if (result.hasErrors()) {
             return "admin-signup";
         }
@@ -52,8 +52,6 @@ public class AdminController {
         String encodedPassword = passwordEncoder.encode(admin.getPassword());
         
         admin.setPassword(encodedPassword);
-        model.addAttribute("admin", admin);
-
         admin.setCreatedAt(LocalDateTime.now());
         admin.setUpdatedAt(LocalDateTime.now());
         adminRepository.save(admin);
