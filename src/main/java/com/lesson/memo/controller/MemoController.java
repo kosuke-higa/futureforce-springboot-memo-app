@@ -154,4 +154,10 @@ public class MemoController {
 
         return "redirect:/memos";
     }
+    
+    @GetMapping("/admin/signin")
+    public String signin() {
+        return "memo-signin";
+    }
 }
+
